@@ -7,6 +7,13 @@ export const activeEventApi = baseApi.injectEndpoints({
             query: () => `/events/public/details`,
             providesTags: ['CurrentEvent']
         }),
+        getPublicToken: builder.query<{event_token: string}, number>({
+            query: (eventId) => `/events/${eventId}/isActive`,
+            async onQueryStarted(_, { queryFulfilled }){
+                const { data: token } = await queryFulfilled;
+                sessionStorage.setItem('event_token', token.event_token);
+            },
+        }),
         checkEvent: builder.mutation<{ event_token: string }, { eventKey: string }>({
             query: (body) => ({
                 url: `/events/isActive`,
@@ -18,8 +25,13 @@ export const activeEventApi = baseApi.injectEndpoints({
                 sessionStorage.setItem('event_token', token.event_token);
             },
             invalidatesTags: ['CurrentEvent', 'Attendance']
-        })
+        }),
+        
     })
 });
 
-export const { useGetPublicInfoEventQuery, useCheckEventMutation } = activeEventApi;
+export const { 
+    useGetPublicInfoEventQuery, 
+    useCheckEventMutation,
+    useGetPublicTokenQuery
+} = activeEventApi;

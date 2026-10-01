@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { BASE_URL } from "../../app/services/baseApi";
 import { getFileName } from "./getFilename.service";
+import { store } from "../../app/store";
 
 interface PDFResponse {
     blob: Blob;
@@ -11,7 +12,8 @@ export async function fetchPDF(
     endpoint: string,
     errorDescription = 'No se pudo generar el archivo.'
 ): Promise<PDFResponse>{
-    const authToken = localStorage.getItem('token');
+    const state = store.getState();
+    const authToken = state.auth.token;
 
     const response = await fetch(`${BASE_URL}${endpoint}`, {
         headers: {

@@ -33,6 +33,7 @@ import { DetailsPage } from "./features/students/components/DetailsPage";
 import { StatsPage } from "./features/students/components/StatsPage";
 import { GeneralReportByArea } from "./features/reports/components/GeneralReportByArea";
 import { StaffDetails } from "./features/staff/components/StaffDetails";
+import { SinglePost } from "./features/home/components/Event/SinglePost";
 
 function App(){
     return( 
@@ -43,9 +44,9 @@ function App(){
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/evento/registros" element={<CurrentEvent />} />
+                    <Route path="/evento/registros/qr/:eventId" element={<SinglePost />} />
                     <Route path="/historial/eventos" element={<HistoricalPage />} />
 
-                    
                     {/* Protected Routes */}
                     <Route element={<ProtectedRoute allowedRoles={['ROOT']} />}>
                         <Route path="/areas/carreras" element={<AreaPage typeId={1} title="Carreras" />} />
@@ -65,14 +66,6 @@ function App(){
 
                         <Route path="/cuentas" element={<AccountPage />} />
                         <Route path="/csv" element={<CsvPage />}/>
-                        {/* Reportes */}
-                        {/* <Route path="/reporte/genero" element={<ReportByGender />} /> */}
-                        {/* <Route path="/reporte/roles" element={<ReportByRoles />} />
-                        <Route path="/reporte/ods" element={<ReportByOds />} />
-                        <Route path="/reporte/alumnos" element={<ReportByStudents />} />
-                        <Route path="/reporte/personal" element={<ReportByStaff />} />
-                        <Route path="/reporte/general" element={<GeneralReport />} />
-                        <Route path="/reporte/alumnos/rango" element={<DetailedReport />} /> */}
                     </Route>
 
                     <Route element={<ProtectedRoute allowedRoles={['ROOT', 'COORDI', 'JEFE_AREA', 'JEFE_DPTO']} />}>
